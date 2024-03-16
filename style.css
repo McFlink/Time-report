@@ -113,3 +113,8 @@ footer {
     background-color: #202344;
     height: 40px;
 }
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
