@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tidrapport</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="main.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <h1>Tidrapport</h1>
+    </header>
+    <main>
+        <form class="input-class">
+            <label for="user-name">Namn</label>
+            <input type="text" id="user-name">
+            <label for="week-input">Välj vecka:</label>
+            <input type="week" id="week-input">
+            <div class="weekday-input">
+                <ul class="week-day">
+                    <label for="monday-start-time" class="day-label">Måndag</label>
+                    <li>
+                        <input type="time" id="monday-start-time">
+                        <label for="monday-end-time">-</label>
+                        <input type="time" id="monday-end-time">
+                    </li>
+                    <label for="tuesday-start-time" class="day-label">Tisdag</label>
+                    <li>
+                        <input type="time" id="tuesday-start-time">
+                        <label for="tuesday-end-time">-</label>
+                        <input type="time" id="tuesday-end-time">
+                    </li>
+                    <label for="wednesday-start-time" class="day-label">Onsdag</label>
+                    <li>
+                        <input type="time" id="wednesday-start-time">
+                        <label for="wednesday-end-time">-</label>
+                        <input type="time" id="wednesday-end-time">
+                    </li>
+                    <label for="thursday-start-time" class="day-label">Torsdag</label>
+                    <li>
+                        <input type="time" id="thursday-start-time">
+                        <label for="thursday-end-time">-</label>
+                        <input type="time" id="thursday-end-time">
+                    </li>
+                    <label for="friday-start-time" class="day-label">Fredag</label>
+                    <li>
+                        <input type="time" id="friday-start-time">
+                        <label for="friday-end-time">-</label>
+                        <input type="time" id="friday-end-time">
+                    </li>
+                </ul>
+            </div>
+            <label for="comments">Kommentarer</label>
+            <textarea id="comments" rows="5"></textarea>
+            <button type="submit" id="submit-btn">Ladda ner som PDF</button>
+        </form>
+    </main>
+    <footer>
+        <p>Powered by <a href="mailto:mikael.chris.flink@gmail.com">Mikael Flink</a></p>
+    </footer>
+</body>
+
+</html>
