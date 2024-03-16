@@ -48,7 +48,7 @@ let submitBtn = document.getElementById("submit-btn");
 submitBtn.addEventListener("click", (event) => {
     event.preventDefault();
 
-    let isCertain = confirm("Är du säker?")
+    let isCertain = confirm("Detta kommer att ladda ner en PDF med ifyllda värden till din enhet.\nÄr du säker?");
 
     if (isCertain) {
         sendTimeReport();
