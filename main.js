@@ -1,7 +1,7 @@
 window.jsPDF = window.jspdf.jsPDF;
 
 function sendTimeReport() {
-    let userName = document.getElementById("user-name").value;
+    let userName = document.getElementById("user-name").value.trim();
     let selectedWeek = document.getElementById("week-input").value;
     let comments = document.getElementById("comments").value;
 
@@ -16,6 +16,9 @@ function sendTimeReport() {
         let endTime = document.getElementById(day + "-end-time").value;
         times[day] = { start: startTime, end: endTime };
     });
+
+    let formattedWeekforOutput = selectedWeek.substring(5);
+    userName = userName.replace(/\s+/g, '_');
 
     // SKapa ny PDF
     let doc = new jsPDF();
@@ -33,14 +36,14 @@ function sendTimeReport() {
         doc.setFontSize(12);
 
         doc.text("Starttid: " + times[day].start, 20, yOffset + 10);
-        doc.text("Sluttid: " + times[day].start, 20, yOffset + 20);
+        doc.text("Sluttid: " + times[day].end, 20, yOffset + 20);
         doc.line(10, yOffset + 25, 100, yOffset + 25);
         yOffset += 30;
     });
 
     doc.text("Kommentar: " + comments, 10, yOffset);
 
-    doc.save("Tidrapport_Johan.pdf");
+    doc.save("Tidrapport_" + userName + "_" + formattedWeekforOutput + ".pdf");
 }
 
 let submitBtn = document.getElementById("submit-btn");
