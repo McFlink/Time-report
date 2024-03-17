@@ -1,11 +1,14 @@
 window.jsPDF = window.jspdf.jsPDF;
 
+let totalHoursInWeek = 0;
+let totalMinutesInWeek = 0;
 let totalWorkTime = {};
+let comments = {};
 
 function sendTimeReport() {
     let userName = document.getElementById("user-name").value.trim();
     let selectedWeek = document.getElementById("week-input").value;
-    let comments = document.getElementById("comments").value;
+    // let comments = doacument.getElementById("comments").value;
 
     // Array for weekdays
     let weekdays = ["måndag", "tisdag", "onsdag", "torsdag", "fredag"];
@@ -18,10 +21,19 @@ function sendTimeReport() {
         let endTime = document.getElementById(day + "-end-time").value;
         times[day] = { start: startTime, end: endTime };
 
+        let comment = document.getElementById(day + "-comment").value;
+        comments[day] = { note: comment };
+        console.log(comments[day]);
+
         totalWorkTime[day] = getHoursAndMinutes(startTime, endTime);
+
+        totalHoursInWeek += totalWorkTime[day].hours;
+        totalMinutesInWeek += totalWorkTime[day].minutes;
 
         console.log("Timmar: " + totalWorkTime[day].hours);
         console.log("Minuter: " + totalWorkTime[day].minutes);
+        console.log("Notis: " + comments[day].note);
+
     });
 
     let weekNumber = selectedWeek.substring(6);
@@ -50,16 +62,17 @@ function sendTimeReport() {
         doc.setTextColor(0);
         doc.setFontSize(12);
 
-        doc.text("Starttid: " + times[day].start, 20, yOffset + 10);
-        doc.text("Sluttid: " + times[day].end, 20, yOffset + 15);
+        doc.text("Starttid: " + times[day].start, 20, yOffset + 5);
+        doc.text("Sluttid: " + times[day].end, 20, yOffset + 10);
         doc.setFont(undefined, 'bold');
-        doc.text("Totalt: " + totalWorkTime[day].hours + "h " + totalWorkTime[day].minutes + "min", 20, yOffset + 22);
+        doc.text("Totalt: " + totalWorkTime[day].hours + "h " + totalWorkTime[day].minutes + "min", 20, yOffset + 17);
         doc.setFont(undefined, 'normal');
+        doc.text("Notis: " + comments[day].note, 20, yOffset + 22)
         doc.line(10, yOffset + 27, 100, yOffset + 27);
-        yOffset += 35;
+        yOffset += 32;
     });
 
-    doc.text("Kommentar: " + comments, 10, yOffset);
+    doc.text("Total arbetstid vecka " + weekNumber + ": " + totalHoursInWeek + "h " + totalMinutesInWeek + "min", 10, yOffset);
 
     doc.save("Tidrapport_" + userName + "_" + formattedWeekforOutput + ".pdf");
 }
