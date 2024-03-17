@@ -20,24 +20,30 @@ function sendTimeReport() {
     let formattedWeekforOutput = selectedWeek.substring(5);
     userName = userName.replace(/\s+/g, '_');
 
+    let weekDates = getWeekDates();
+
     // SKapa ny PDF
     let doc = new jsPDF();
     doc.text("Tidrapport för " + userName, 10, 10);
     doc.text("Avser vecka: " + selectedWeek, 10, 20);
-
+    
     let yOffset = 30;
+    doc.line(10, 23, 100, 23);
     weekdays.forEach(day => {
+        let date = weekDates[day];
         doc.setTextColor(255, 0, 0);
         doc.setFontSize(14);
 
-        doc.text(day.charAt(0).toUpperCase() + day.slice(1) + ": ", 10, yOffset);
+        console.log(date);
+
+        doc.text(day.charAt(0).toUpperCase() + day.slice(1) + ": " + date, 10, yOffset);
 
         doc.setTextColor(0);
         doc.setFontSize(12);
 
         doc.text("Starttid: " + times[day].start, 20, yOffset + 10);
         doc.text("Sluttid: " + times[day].end, 20, yOffset + 20);
-        doc.line(10, yOffset + 25, 100, yOffset + 25);
+        doc.line(10, yOffset + 23, 100, yOffset + 23);
         yOffset += 30;
     });
 
@@ -57,3 +63,24 @@ submitBtn.addEventListener("click", (event) => {
         sendTimeReport();
     }
 });
+
+function getWeekDates() {
+    let selectedWeek = document.getElementById("week-input").value;
+    let dateParts = selectedWeek.split("-");
+    let year = parseInt(dateParts[0]);
+    let week = parseInt(dateParts[1].substring(1));
+
+    let currentDate = new Date(year, 0, 1);
+    let weekStart = currentDate.getTime() + ((week - 1) * 7 - currentDate.getDay() + 1) * 24 * 60 * 60 * 1000;
+
+    let days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+    let weekDates = {};
+
+    for (let i = 0; i < 7; i++) {
+        let currentDay = new Date(weekStart + i * 24 * 60 * 60 * 1000);
+        let dayOfWeek = days[currentDay.getDay()];
+        weekDates[dayOfWeek] = currentDay.toLocaleDateString("sv-SE");
+    }
+
+    return weekDates;
+}
