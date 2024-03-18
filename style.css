@@ -130,3 +130,15 @@ footer a {
     color: white;
     text-decoration: none;
 }
+
+@media screen and (max-width: 490px) {
+    .time-box {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    .day-note {
+        width: 340px;
+    }
+}
