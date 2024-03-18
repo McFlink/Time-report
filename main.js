@@ -15,25 +15,34 @@ function sendTimeReport() {
 
     // Object for saving start- and end times för each weekday
     let times = {};
+    let breakTimes = {};
 
     weekdays.forEach(day => {
         let startTime = document.getElementById(day + "-start-time").value;
         let endTime = document.getElementById(day + "-end-time").value;
-        times[day] = { start: startTime, end: endTime };
+        let breakTime = parseInt(document.getElementById(day + "-break-duration").value) || 0;
+
+        if (startTime && endTime) {
+            times[day] = { start: startTime, end: endTime };
+            breakTimes[day] = { time: breakTime };
+            totalWorkTime[day] = getHoursAndMinutes(startTime, endTime, breakTime);
+
+            totalHoursInWeek += totalWorkTime[day].hours;
+            totalMinutesInWeek += totalWorkTime[day].minutes;
+
+            if (totalMinutesInWeek >= 60) {
+                totalHoursInWeek += Math.floor(totalMinutesInWeek / 60);
+                totalMinutesInWeek %= 60;
+            }
+        }
+        else {
+            times[day] = { start: "", end: "" };
+            breakTimes[day] = { time: "" };
+            totalWorkTime[day] = { hours: 0, minutes: 0 };
+        }
 
         let comment = document.getElementById(day + "-comment").value;
         comments[day] = { note: comment };
-        console.log(comments[day]);
-
-        totalWorkTime[day] = getHoursAndMinutes(startTime, endTime);
-
-        totalHoursInWeek += totalWorkTime[day].hours;
-        totalMinutesInWeek += totalWorkTime[day].minutes;
-
-        console.log("Timmar: " + totalWorkTime[day].hours);
-        console.log("Minuter: " + totalWorkTime[day].minutes);
-        console.log("Notis: " + comments[day].note);
-
     });
 
     let weekNumber = selectedWeek.substring(6);
@@ -64,12 +73,13 @@ function sendTimeReport() {
 
         doc.text("Starttid: " + times[day].start, 20, yOffset + 5);
         doc.text("Sluttid: " + times[day].end, 20, yOffset + 10);
+        doc.text("Rast: " + breakTimes[day].time + " min", 20, yOffset + 15);
         doc.setFont(undefined, 'bold');
-        doc.text("Totalt: " + totalWorkTime[day].hours + "h " + totalWorkTime[day].minutes + "min", 20, yOffset + 17);
+        doc.text("Totalt: " + totalWorkTime[day].hours + "h " + totalWorkTime[day].minutes + "min", 20, yOffset + 22);
         doc.setFont(undefined, 'normal');
-        doc.text("Notis: " + comments[day].note, 20, yOffset + 22)
-        doc.line(10, yOffset + 27, 100, yOffset + 27);
-        yOffset += 32;
+        doc.text("Notis: " + comments[day].note, 20, yOffset + 27)
+        doc.line(10, yOffset + 32, 100, yOffset + 32);
+        yOffset += 37;
     });
 
     doc.text("Total arbetstid vecka " + weekNumber + ": " + totalHoursInWeek + "h " + totalMinutesInWeek + "min", 10, yOffset);
@@ -110,16 +120,20 @@ function getWeekDates() {
     return weekDates;
 }
 
-function getHoursAndMinutes(startTime, endTime) {
+function getHoursAndMinutes(startTime, endTime, breakTime) {
     let startDate = new Date("2000-01-01T" + startTime + ":00");
     let endDate = new Date("2000-01-01T" + endTime + ":00");
 
     let timeDiff = endDate.getTime() - startDate.getTime();
 
-    let hours = Math.floor(timeDiff / (1000 * 60 * 60));
-    let minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+    timeDiff -= breakTime * 60 * 1000;
 
-    return { hours: hours, minutes: minutes};
+    let totalMinutes = Math.floor(timeDiff / (1000 * 60));
+
+    let hours = Math.floor(totalMinutes / 60);
+    let minutes = totalMinutes % 60;
+
+    return { hours: hours, minutes: minutes };
 }
 
 // Förklaring av getWeekDates()-metoden:

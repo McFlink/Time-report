@@ -93,11 +93,23 @@ input[type="time"] {
     border-radius: 5px;
 }
 
-#comments {
-    width: 300px;
-    font-size: 20px;
-    padding: 5px;
+.time-box {
+    margin-left: 97px;
+}
+
+.day-note {
+    margin: 7px;
+    padding: 3px;
+    padding-left: 7px;
+    border-radius: 5px;;
+}
+
+.break-duration {
+    margin-left: 10px;
+    max-width: 84px;
     border-radius: 5px;
+    padding: 2px;
+    background-color: yellow;
 }
 
 #submit-btn {

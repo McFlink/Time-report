@@ -17,52 +17,67 @@
     <main>
         <form class="input-class">
             <label for="user-name">Namn</label>
-            <input type="text" id="user-name">
+            <input type="text" id="user-name" required />
             <label for="week-input">Välj vecka:</label>
             <input type="week" id="week-input">
             <div class="weekday-input">
                 <ul class="week-day">
                     <label for="måndag-start-time" class="day-label">Måndag</label>
                     <li>
-                        <input type="time" id="måndag-start-time">
-                        <label for="måndag-end-time">-</label>
-                        <input type="time" id="måndag-end-time">
+                        <div class="time-box">
+                            <input type="time" id="måndag-start-time">
+                            <label for="måndag-end-time">-</label>
+                            <input type="time" id="måndag-end-time">
+                            <input type="number" id="måndag-break-duration" class="break-duration" min="0" step="5" placeholder="Rast (min)">
+                        </div>
                         <div>
                             <input type="text" id="måndag-comment" class="day-note" placeholder="Notis">
                         </div>
                     </li>
                     <label for="tisdag-start-time" class="day-label">Tisdag</label>
                     <li>
-                        <input type="time" id="tisdag-start-time">
-                        <label for="tisdag-end-time">-</label>
-                        <input type="time" id="tisdag-end-time">
+                        <div class="time-box">
+                            <input type="time" id="tisdag-start-time">
+                            <label for="tisdag-end-time">-</label>
+                            <input type="time" id="tisdag-end-time">
+                            <input type="number" id="tisdag-break-duration" class="break-duration" min="0" step="5" placeholder="Rast (min)">
+                        </div>
                         <div>
                             <input type="text" id="tisdag-comment" class="day-note" placeholder="Notis">
                         </div>
                     </li>
                     <label for="onsdag-start-time" class="day-label">Onsdag</label>
                     <li>
-                        <input type="time" id="onsdag-start-time">
-                        <label for="onsdag-end-time">-</label>
-                        <input type="time" id="onsdag-end-time">
+                        <div class="time-box">
+                            <input type="time" id="onsdag-start-time">
+                            <label for="onsdag-end-time">-</label>
+                            <input type="time" id="onsdag-end-time">
+                            <input type="number" id="onsdag-break-duration" class="break-duration" min="0" step="5" placeholder="Rast (min)">
+                        </div>
                         <div>
                             <input type="text" id="onsdag-comment" class="day-note" placeholder="Notis">
                         </div>
                     </li>
                     <label for="torsdag-start-time" class="day-label">Torsdag</label>
                     <li>
-                        <input type="time" id="torsdag-start-time">
-                        <label for="torsdag-end-time">-</label>
-                        <input type="time" id="torsdag-end-time">
+                        <div class="time-box">
+                            <input type="time" id="torsdag-start-time">
+                            <label for="torsdag-end-time">-</label>
+                            <input type="time" id="torsdag-end-time">
+                            <input type="number" id="torsdag-break-duration" class="break-duration" min="0" step="5" placeholder="Rast (min)">
+                        </div>
                         <div>
                             <input type="text" id="torsdag-comment" class="day-note" placeholder="Notis">
                         </div>
                     </li>
                     <label for="fredag-start-time" class="day-label">Fredag</label>
                     <li>
-                        <input type="time" id="fredag-start-time">
-                        <label for="fredag-end-time">-</label>
-                        <input type="time" id="fredag-end-time">
+                        <div class="time-box">
+                            <input type="time" id="fredag-start-time">
+                            <label for="fredag-end-time">-</label>
+                            <input type="time" id="fredag-end-time">
+                            <input type="number" id="fredag-break-duration" class="break-duration" min="0" step="5" placeholder="Rast (min)">
+                        </div>
                         <div>
                             <input type="text" id="fredag-comment" class="day-note" placeholder="Notis">
                         </div>
