@@ -8,7 +8,6 @@ let comments = {};
 function sendTimeReport() {
     let userName = document.getElementById("user-name").value.trim();
     let selectedWeek = document.getElementById("week-input").value;
-    // let comments = doacument.getElementById("comments").value;
 
     // Array for weekdays
     let weekdays = ["måndag", "tisdag", "onsdag", "torsdag", "fredag"];
@@ -71,18 +70,20 @@ function sendTimeReport() {
         doc.setTextColor(0);
         doc.setFontSize(12);
 
-        doc.text("Starttid: " + times[day].start, 20, yOffset + 5);
-        doc.text("Sluttid: " + times[day].end, 20, yOffset + 10);
-        doc.text("Rast: " + breakTimes[day].time + " min", 20, yOffset + 15);
+        doc.text("Starttid: " + times[day].start, 20, yOffset + 6);
+        doc.text("Sluttid: " + times[day].end, 20, yOffset + 11);
+        doc.text("Rast: " + breakTimes[day].time + " min", 20, yOffset + 16);
         doc.setFont(undefined, 'bold');
-        doc.text("Totalt: " + totalWorkTime[day].hours + "h " + totalWorkTime[day].minutes + "min", 20, yOffset + 22);
+        doc.text("Totalt: " + totalWorkTime[day].hours + "h " + totalWorkTime[day].minutes + "min", 20, yOffset + 23);
         doc.setFont(undefined, 'normal');
-        doc.text("Notis: " + comments[day].note, 20, yOffset + 27)
-        doc.line(10, yOffset + 32, 100, yOffset + 32);
+        doc.text("Notis: " + comments[day].note, 20, yOffset + 28)
+        doc.line(10, yOffset + 31, 100, yOffset + 31);
         yOffset += 37;
     });
 
-    doc.text("Total arbetstid vecka " + weekNumber + ": " + totalHoursInWeek + "h " + totalMinutesInWeek + "min", 10, yOffset);
+    doc.setFontSize(14);
+    doc.setFont(undefined, 'bold');
+    doc.text("Total arbetstid vecka " + weekNumber + ": " + totalHoursInWeek + "h " + totalMinutesInWeek + "min", 10, yOffset + 3);
 
     doc.save("Tidrapport_" + userName + "_" + formattedWeekforOutput + ".pdf");
 }
