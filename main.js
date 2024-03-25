@@ -52,40 +52,42 @@ function sendTimeReport() {
 
     // SKapa ny PDF
     let doc = new jsPDF();
-    doc.text("Tidrapport för " + userName, 10, 10);
-    doc.text("Avser vecka: " + weekNumber, 10, 20);
+    doc.text("Tidrapport för " + userName, 60, 10);
+    doc.text("Avser vecka: " + weekNumber, 60, 20);
 
     let yOffset = 30;
-    doc.line(10, 23, 100, 23);
+    doc.line(50, 23, 150, 23);
     weekdays.forEach(day => {
         let date = weekDates[day];
         doc.setTextColor(255, 0, 0);
         doc.setFontSize(14);
 
-        doc.text(day.charAt(0).toUpperCase() + day.slice(1) + " - ", 10, yOffset);
+        doc.text(day.charAt(0).toUpperCase() + day.slice(1) + " - ", 60, yOffset);
 
         doc.setFontSize(10);
-        doc.text(date, 32, yOffset);
+        doc.text(date, 82, yOffset);
 
         doc.setTextColor(0);
         doc.setFontSize(12);
 
-        doc.text("Starttid: " + times[day].start, 20, yOffset + 6);
-        doc.text("Sluttid: " + times[day].end, 20, yOffset + 11);
-        doc.text("Rast: " + breakTimes[day].time + " min", 20, yOffset + 16);
+        doc.text("Starttid: " + times[day].start, 70, yOffset + 6);
+        doc.text("Sluttid: " + times[day].end, 70, yOffset + 11);
+        doc.text("Rast: " + breakTimes[day].time + " min", 70, yOffset + 16);
         doc.setFont(undefined, 'bold');
-        doc.text("Totalt: " + totalWorkTime[day].hours + "h " + totalWorkTime[day].minutes + "min", 20, yOffset + 23);
+        doc.text("Totalt: " + totalWorkTime[day].hours + "h " + totalWorkTime[day].minutes + "min", 70, yOffset + 23);
         doc.setFont(undefined, 'normal');
-        doc.text("Notis: " + comments[day].note, 20, yOffset + 28)
-        doc.line(10, yOffset + 31, 100, yOffset + 31);
+        doc.text("Notis: " + comments[day].note, 70, yOffset + 28)
+        doc.line(50, yOffset + 31, 150, yOffset + 31);
         yOffset += 37;
     });
 
     doc.setFontSize(14);
     doc.setFont(undefined, 'bold');
-    doc.text("Total arbetstid vecka " + weekNumber + ": " + totalHoursInWeek + "h " + totalMinutesInWeek + "min", 10, yOffset + 3);
+    doc.text("Total arbetstid vecka " + weekNumber + ": " + totalHoursInWeek + "h " + totalMinutesInWeek + "min", 60, yOffset + 3);
 
     doc.save("Tidrapport_" + userName + "_" + formattedWeekforOutput + ".pdf");
+
+    // NOLLSTÄLL TIDRAPPORT VID SUBMIT!!
 }
 
 let submitBtn = document.getElementById("submit-btn");
